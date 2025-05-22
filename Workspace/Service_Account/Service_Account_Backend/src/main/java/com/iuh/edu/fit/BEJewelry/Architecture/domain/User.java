@@ -16,16 +16,17 @@ import java.time.Instant;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotBlank(message = "email không được để trống")
+    @Column(unique = true)
     private String email;
 
     @NotBlank(message = "password không được để trống")
     private String password;
 
     private String name;
-    private int age;
+    private Integer age;
 
     @Enumerated(EnumType.STRING)
     private GenderEnum gender;

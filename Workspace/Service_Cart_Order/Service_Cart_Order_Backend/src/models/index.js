@@ -5,6 +5,7 @@ const CartItem = require('./CartItem');
 const Order = require('./Order');
 const OrderDetail = require('./OrderDetail');
 const ProductImage = require('./ProductImage');
+const DeliveryProof = require('./DeliveryProof');
 
 // Định nghĩa lại các mối quan hệ sử dụng tên cột đã cập nhật
 Cart.hasMany(CartItem, { foreignKey: 'cart_id', as: 'cartItems', onDelete: 'CASCADE' });
@@ -28,6 +29,15 @@ OrderDetail.belongsTo(Product, { foreignKey: 'product_id', as: 'product' });
 Product.hasMany(ProductImage, { foreignKey: 'product_id', as: 'imageSet' });
 ProductImage.belongsTo(Product, { foreignKey: 'product_id', as: 'product' });
 
+Order.belongsTo(User, { foreignKey: 'deliverer_id', as: 'deliverer' });
+User.hasMany(Order, { foreignKey: 'deliverer_id', as: 'deliveries' });
+
+Order.hasOne(DeliveryProof, { foreignKey: 'order_id', as: 'deliveryProof' });
+DeliveryProof.belongsTo(Order, { foreignKey: 'order_id', as: 'order' });
+
+DeliveryProof.belongsTo(User, { foreignKey: 'deliverer_id', as: 'deliverer' });
+User.hasMany(DeliveryProof, { foreignKey: 'deliverer_id', as: 'deliveryProofs' });
+
 module.exports = {
     User,
     Cart,
@@ -35,5 +45,6 @@ module.exports = {
     CartItem,
     Order,
     OrderDetail,
-    ProductImage
+    ProductImage,
+    DeliveryProof
 };

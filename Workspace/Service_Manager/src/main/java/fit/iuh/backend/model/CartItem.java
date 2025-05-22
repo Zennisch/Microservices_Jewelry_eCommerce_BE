@@ -9,14 +9,14 @@ import lombok.Data;
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cartItemId;
+    private Long id; // Đổi từ cartItemId thành id
 
     @ManyToOne
-    @JoinColumn(name = "cart_id")
+    @JoinColumn(name = "cart_id") // Giữ nguyên snake_case cho tên cột
     private Cart cart;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id") // Giữ nguyên snake_case cho tên cột
     private Product product;
 
     private Integer quantity;

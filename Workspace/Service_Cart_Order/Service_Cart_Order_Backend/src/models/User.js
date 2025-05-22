@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/Database');
 
-const UserRoleEnum = ['ADMIN', 'USER', 'MODERATOR'];
+const UserRoleEnum = ['ADMIN', 'USER', 'MANAGER', 'DELIVERER'];
 const UserStateEnum = ['ACTIVE', 'INACTIVE', 'BANNED'];
 
 const User = sequelize.define('User', {
@@ -82,10 +82,26 @@ const User = sequelize.define('User', {
         allowNull: true,
     },
     state: {
-        type: DataTypes.ENUM(...UserStateEnum),
-        allowNull: false,
+        type: DataTypes.STRING,
+        allowNull: true,
         defaultValue: 'ACTIVE',
+        validate: {
+            isIn: {
+                args: [UserStateEnum],
+                msg: `State must be one of: ${UserStateEnum.join(', ')}`
+            }
+        }
     },
+    role: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+            isIn: {
+                args: [UserRoleEnum],
+                msg: `Role must be one of: ${UserRoleEnum.join(', ')}`
+            }
+        }
+    }
 }, {
     tableName: 'users',
     timestamps: true,

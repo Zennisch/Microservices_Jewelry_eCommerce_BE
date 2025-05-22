@@ -9,12 +9,15 @@ import lombok.Data;
 public class CollectionImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long imageId;
+    private Long id; // Đổi từ imageId thành id
 
     @ManyToOne
     @JoinColumn(name = "collection_id")
     private Collection collection;
 
-    private String imageURL;
-    private boolean isThumbnail;
+    @Column(columnDefinition = "TEXT")
+    private String imageUrl; // Đổi từ imageURL thành imageUrl
+    
+    private Boolean isPrimary; // Đổi từ isThumbnail thành isPrimary
+    private Integer sortOrder; // Thêm sortOrder từ Service Catalog
 }

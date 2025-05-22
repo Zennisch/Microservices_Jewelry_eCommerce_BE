@@ -1,15 +1,13 @@
 package fit.iuh.backend.repository;
 
-import fit.iuh.backend.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import fit.iuh.backend.model.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>{
@@ -27,7 +25,23 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
             "OR LOWER(c.name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
             "OR LOWER(col.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     Page<Product> searchByKeyword(@Param("keyword") String keyword, Pageable pageable);
-    Page<Product> findByStockLessThanEqual(int threshold,Pageable pageable);
-    Page<Product> findByStockEquals(int stock, Pageable pageable);
-
+    
+    // Changed field names to match entity properties
+    Page<Product> findByQuantityLessThanEqual(int threshold, Pageable pageable);
+    Page<Product> findByQuantityEquals(int quantity, Pageable pageable);
+    
+    Page<Product> findByStatus(String status, Pageable pageable);
+    Page<Product> findByGender(Integer gender, Pageable pageable);
+    
+    // Fix field name to match Category entity
+    Page<Product> findByCategory_Id(Long categoryId, Pageable pageable);
+    
+    // Keep CollectionId since it matches the entity
+    Page<Product> findByCollection_CollectionId(Long collectionId, Pageable pageable);
+    
+    @Query("SELECT p FROM Product p WHERE p.code = :code")
+    Product findByCode(@Param("code") String code);
+    
+    @Query("SELECT p FROM Product p JOIN p.salesSummaries s GROUP BY p ORDER BY SUM(s.quantitySold) DESC")
+    Page<Product> findTopSellingProducts(Pageable pageable);
 }

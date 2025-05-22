@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 public class ImageResponse {
     private Long id;
-    private String imageURL;
-    private Boolean isThumbnail;
+    private String imageUrl; // Đổi từ imageURL thành imageUrl
+    private Boolean isPrimary; // Đổi từ isThumbnail thành isPrimary
+    private Integer sortOrder; // Thêm sortOrder
 }

@@ -11,35 +11,11 @@ import java.util.List;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryId;
+    private Long id; // Đổi từ categoryId thành id
 
     private String name;
     private String description;
 
     @OneToMany(mappedBy = "category")
     private List<Product> products;
-
-    public String getName() {
-        return name;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

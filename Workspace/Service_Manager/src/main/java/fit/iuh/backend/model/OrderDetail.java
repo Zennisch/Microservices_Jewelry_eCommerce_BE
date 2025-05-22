@@ -2,6 +2,7 @@ package fit.iuh.backend.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -9,7 +10,7 @@ import lombok.Data;
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderDetailId;
+    private Long id; // Đổi từ orderDetailId thành id
 
     @ManyToOne
     @JoinColumn(name = "order_id")
@@ -21,4 +22,7 @@ public class OrderDetail {
 
     private Integer quantity;
     private Double price;
+    
+    private LocalDateTime createdAt; // Thêm createdAt
+    private LocalDateTime updatedAt; // Thêm updatedAt
 }

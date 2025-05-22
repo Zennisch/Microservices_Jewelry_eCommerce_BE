@@ -5,9 +5,9 @@ spring:
   devtools:
     add-properties: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/backend
-    username: postgres
-    password: 123456
+    url: jdbc:postgresql://localhost:6543/JEC
+    username: jec_admin
+    password: jec_admin
   jpa:
     properties:
       hibernate:
@@ -30,4 +30,4 @@ openapi:
     version: 1.0.0
 
 jwt:
-  secretKey: abc@123
+  secretKey: AGhK1qC9JQ9/PPeoP9VakpZ5k78TFgJFb9f7u6zJULAEKl32nopfWTLOHC7x6AXowI6vqQ47UFYjAqfHy7nIDw==

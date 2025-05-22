@@ -12,10 +12,10 @@ import java.util.List;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cartId;
+    private Long id; // Đổi từ cartId thành id
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id") // Giữ nguyên snake_case trong tên column
     private User user;
 
     private LocalDateTime createdAt;

@@ -85,6 +85,24 @@ app.use(
     })
 );
 
+// Proxy middleware for Service Manager
+app.use(
+    '/api/v1/manager',
+    createProxyMiddleware({
+        target: 'http://localhost:8003',
+        changeOrigin: true,
+        pathRewrite: {
+            '^/api/v1/manager': '', // Remove the /api/v1/manager prefix when forwarding
+        },
+        onProxyReq: (proxyReq, req, res) => {
+            logger.debug(`Proxying request to Service Manager: ${req.method} ${req.url}`);
+        },
+        onProxyRes: (proxyRes, req, res) => {
+            logger.debug(`Received response from Service Manager: ${proxyRes.statusCode}`);
+        },
+    })
+);
+
 // Proxy middleware for Service Catalog
 app.use(
     '/api/v1/catalog',

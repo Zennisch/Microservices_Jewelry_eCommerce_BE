@@ -1,0 +1,13 @@
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app
+
+# Install necessary tools
+RUN apt-get update && \
+    apt-get install -y curl unzip
+
+# Don't copy files - we'll use volumes for development
+EXPOSE 8001
+
+# Use gradlew for continuous development
+CMD ["./gradlew", "bootRun", "--stacktrace", "--info"]

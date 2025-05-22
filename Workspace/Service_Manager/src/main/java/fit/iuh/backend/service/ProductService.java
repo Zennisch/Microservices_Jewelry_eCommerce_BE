@@ -1,18 +1,14 @@
 package fit.iuh.backend.service;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import fit.iuh.backend.controller.request.ImageRequest;
 import fit.iuh.backend.controller.request.ProductCreationRequest;
 import fit.iuh.backend.controller.request.ProductUpdateRequest;
 import fit.iuh.backend.controller.response.ProductPageResponse;
 import fit.iuh.backend.controller.response.ProductResponse;
-import fit.iuh.backend.model.Product;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
 
 public interface ProductService {
     ProductPageResponse getAllProducts(String keyword , String column, String direction, int page, int size);

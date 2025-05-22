@@ -14,10 +14,10 @@ import java.util.Map;
 public class UserActivity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long activityId;
+    private Long id; // Đổi từ activityId thành id
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id") // Giữ nguyên snake_case cho tên cột
     private User user;
 
     private String type;

@@ -1,0 +1,18 @@
+FROM node:18
+
+WORKDIR /app
+
+# Install nodemon globally for development hot reload
+RUN npm install -g nodemon
+
+# Copy package files for installation
+COPY package*.json ./
+RUN npm install
+
+# Create logs directory
+RUN mkdir -p logs
+
+EXPOSE 8000
+
+# Use nodemon for continuous development
+CMD ["npm", "run", "dev"]

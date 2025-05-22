@@ -12,6 +12,10 @@ const Order = sequelize.define('Order', {
         type: DataTypes.BIGINT, // Đổi sang BIGINT để phù hợp với id user
         allowNull: false,
     },
+    deliverer_id: {
+        type: DataTypes.BIGINT,
+        allowNull: true,
+    },
     created_at: { // Đổi từ createAt thành created_at
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
@@ -25,12 +29,17 @@ const Order = sequelize.define('Order', {
         allowNull: false,
     },
     status: {
-        type: DataTypes.ENUM(...Object.values(OrderStatus)),
+        type: DataTypes.STRING,
         defaultValue: OrderStatus.PENDING,
+        allowNull: false,
     },
     payment_status: { // Đổi từ paymentStatus thành payment_status
-        type: DataTypes.ENUM('PENDING', 'PAID', 'CANCELED'),
+        type: DataTypes.STRING,
         defaultValue: 'PENDING',
+    },
+    payment_method: { 
+        type: DataTypes.STRING,
+        defaultValue: 'COD',
     },
 }, {
     tableName: 'orders',

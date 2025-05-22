@@ -1,0 +1,13 @@
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app
+
+# Install Maven
+RUN apt-get update && \
+    apt-get install -y maven
+
+# Don't copy files - we'll use volumes for development
+EXPOSE 8003
+
+# Use mvnw for spring-boot:run with dev profile
+CMD ["./mvnw", "spring-boot:run", "-Dspring-boot.run.profiles=dev"]

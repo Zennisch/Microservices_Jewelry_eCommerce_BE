@@ -10,5 +10,9 @@ import java.util.Optional;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     Optional<Category> findByName(String name);
 
-    Optional<Category> findByCategoryId(Long categoryId);
+    // Change this method
+    // Optional<Category> findByCategoryId(Long categoryId);
+    
+    // To this (to match the entity's field name)
+    Optional<Category> findById(Long id);
 }

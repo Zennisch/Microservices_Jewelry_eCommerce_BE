@@ -12,17 +12,23 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productId;
+    private Long id; // Đổi từ productId thành id
 
     private String name;
+    private String code; // Thêm code từ Service Catalog
+    
+    @Column(columnDefinition = "TEXT")
     private String description;
-    private Integer stock;
+    
+    private Integer quantity; // Đổi từ stock thành quantity
     private Double price;
+    private String status; // Thêm status từ Service Catalog và Cart Order
     private Integer gender;
     private String material;
     private Integer goldKarat;
     private String color;
     private String brand;
+    private String size; // Thêm size từ Service Catalog
     private Integer viewCount;
 
     @ManyToOne
@@ -47,159 +53,13 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private List<CartItem> cartItems;
-
-
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Integer getStock() {
-        return stock;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public Integer getGender() {
-        return gender;
-    }
-
-    public String getMaterial() {
-        return material;
-    }
-
-    public Integer getGoldKarat() {
-        return goldKarat;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public Integer getViewCount() {
-        return viewCount;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public Collection getCollection() {
-        return collection;
-    }
-
-    public List<ProductImage> getImageSet() {
-        return imageSet;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public List<OrderDetail> getOrderDetails() {
-        return orderDetails;
-    }
-
-    public List<CartItem> getCartItems() {
-        return cartItems;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public void setGender(Integer gender) {
-        this.gender = gender;
-    }
-
-    public void setMaterial(String material) {
-        this.material = material;
-    }
-
-    public void setGoldKarat(Integer goldKarat) {
-        this.goldKarat = goldKarat;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public void setViewCount(Integer viewCount) {
-        this.viewCount = viewCount;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public void setCollection(Collection collection) {
-        this.collection = collection;
-    }
-
-    public void setImageSet(List<ProductImage> imageSet) {
-        this.imageSet = imageSet;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
-
-    public void setOrderDetails(List<OrderDetail> orderDetails) {
-        this.orderDetails = orderDetails;
-    }
-
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
-    }
-
+    
+    @OneToMany(mappedBy = "product")
+    private List<ProductFeature> productFeatures; // Thêm quan hệ productFeatures
+    
+    @OneToMany(mappedBy = "product")
+    private List<ProductVariant> productVariants; // Thêm quan hệ productVariants
+    
+    @OneToMany(mappedBy = "product")
+    private List<ProductSalesSummary> salesSummaries; // Thêm quan hệ salesSummaries
 }
