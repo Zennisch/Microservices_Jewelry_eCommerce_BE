@@ -164,6 +164,6 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(PORT, () => {
-    logger.info(`API Gateway running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+    logger.info(`API Gateway running on http://0.0.0.0:${PORT}`);
 });
