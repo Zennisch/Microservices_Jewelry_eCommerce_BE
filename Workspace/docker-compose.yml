@@ -147,6 +147,23 @@ services:
             - api-gateway-logs:/app/logs
         networks:
             - jec-network
+            
+    service-chatbot:
+        build:
+            context: ./Service_Chatbot/Service_Chatbot_Python
+            dockerfile: Dockerfile
+        container_name: service-chatbot
+        ports:
+            - "5000:5000"
+        depends_on:
+            - api-gateway
+        environment:
+            - GEMINI_API_KEY=AIzaSyAxSK1D1M1mDrKm9a3_v6L29O4H1G59vf0
+            - API_GATEWAY_URL=http://api-gateway:8000/api/v1
+        volumes:
+            - ./Service_Chatbot/Service_Chatbot_Python:/app
+        networks:
+            - jec-network
 
 networks:
     jec-network:

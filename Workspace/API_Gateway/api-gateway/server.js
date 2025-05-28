@@ -34,7 +34,7 @@ logger.info(`Using Account Service at: ${ACCOUNT_SERVICE_HOST}:8001`);
 logger.info(`Using Manager Service at: ${MANAGER_SERVICE_HOST}:8003`);
 logger.info(`Using Catalog Service at: ${CATALOG_SERVICE_HOST}:8005`);
 logger.info(`Using Cart/Order Service at: ${CART_ORDER_SERVICE_HOST}:8006`);
-logger.info(`Using Chatbot Service at: ${CHATBOT_SERVICE_HOST}:8005`);
+logger.info(`Using Chatbot Service at: ${CHATBOT_SERVICE_HOST}:5000`);
 
 // Enable CORS
 app.use(cors());

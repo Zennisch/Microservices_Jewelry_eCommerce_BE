@@ -20,7 +20,6 @@ public class RateLimiterConfig {
         return buckets.computeIfAbsent(ip, this::newBucket);
     }
 
-    // Remove the @Bean annotation - this is not a Spring bean, just a helper method
     private Bucket newBucket(String ip) {
         // 5 attempts per 5 minutes per IP
         return Bucket.builder()
