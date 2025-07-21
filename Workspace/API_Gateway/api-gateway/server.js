@@ -27,12 +27,14 @@ const ACCOUNT_SERVICE_HOST = process.env.ACCOUNT_SERVICE_HOST || 'localhost';
 const MANAGER_SERVICE_HOST = process.env.MANAGER_SERVICE_HOST || 'localhost';
 const CATALOG_SERVICE_HOST = process.env.CATALOG_SERVICE_HOST || 'localhost';
 const CART_ORDER_SERVICE_HOST = process.env.CART_ORDER_SERVICE_HOST || 'localhost';
+const CHATBOT_SERVICE_HOST = process.env.CHATBOT_SERVICE_HOST || 'localhost';
 
 // Log service configurations
 logger.info(`Using Account Service at: ${ACCOUNT_SERVICE_HOST}:8001`);
 logger.info(`Using Manager Service at: ${MANAGER_SERVICE_HOST}:8003`);
 logger.info(`Using Catalog Service at: ${CATALOG_SERVICE_HOST}:8005`);
 logger.info(`Using Cart/Order Service at: ${CART_ORDER_SERVICE_HOST}:8006`);
+logger.info(`Using Chatbot Service at: ${CHATBOT_SERVICE_HOST}:5000`);
 
 // Enable CORS
 app.use(cors());
@@ -151,6 +153,24 @@ app.use(
     })
 );
 
+// Proxy middleware for Service Chatbot
+app.use(
+    '/api/v1/chatbot',
+    createProxyMiddleware({
+        target: `http://${CHATBOT_SERVICE_HOST}:5000/api/v1`,
+        changeOrigin: true,
+        pathRewrite: {
+            '^/api/v1/chatbot': '', // Remove the /api/v1/chatbot prefix when forwarding
+        },
+        onProxyReq: (proxyReq, req, res) => {
+            logger.debug(`Proxying request to Service Chatbot: ${req.method} ${req.url}`);
+        },
+        onProxyRes: (proxyRes, req, res) => {
+            logger.debug(`Received response from Service Chatbot: ${proxyRes.statusCode}`);
+        },
+    })
+);
+
 // Handle 404 routes
 app.use((req, res) => {
     logger.warn(`Route not found: ${req.method} ${req.originalUrl}`);
@@ -164,6 +184,6 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(PORT, () => {
-    logger.info(`API Gateway running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+    logger.info(`API Gateway running on http://0.0.0.0:${PORT}`);
 });
