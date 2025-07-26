@@ -10,4 +10,5 @@ RUN apt-get update && \
 EXPOSE 8001
 
 # Use gradlew for continuous development
+RUN chmod +x ./gradlew
 CMD ["./gradlew", "bootRun", "--stacktrace", "--info"]

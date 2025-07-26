@@ -10,4 +10,5 @@ RUN apt-get update && \
 EXPOSE 8003
 
 # Use mvnw for spring-boot:run with dev profile
+RUN chmod +x ./mvnw
 CMD ["./mvnw", "spring-boot:run", "-Dspring-boot.run.profiles=dev"]
