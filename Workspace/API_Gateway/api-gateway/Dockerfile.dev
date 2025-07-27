@@ -7,6 +7,8 @@ RUN npm install -g nodemon
 COPY package*.json ./
 RUN npm install
 
+COPY . .
+
 RUN mkdir -p logs
 
 EXPOSE 8000

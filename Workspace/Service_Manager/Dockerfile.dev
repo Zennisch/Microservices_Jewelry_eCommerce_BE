@@ -9,6 +9,7 @@ COPY pom.xml ./
 RUN mvn dependency:go-offline
 
 COPY . .
+RUN chmod a+x ./mvnw
 
 EXPOSE 8003
 

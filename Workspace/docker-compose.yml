@@ -12,7 +12,7 @@ services:
         ports:
             - '${POSTGRES_PORT}:${POSTGRES_PORT}'
         volumes:
-            - postgres_data:/var/lib/postgresql/data
+            - postgres_data:/var/lib/postgresql/data  # Safe - data only
         command: -p ${POSTGRES_PORT}
         networks:
             - jec-network
@@ -47,7 +47,7 @@ services:
             - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID=${ACCOUNT_SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID}
             - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET=${ACCOUNT_SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET}
         volumes:
-            - ./Service_Account/Service_Account_Backend:/app
+            # Only safe volumes - cache and uploads, NOT source code
             - service-account-gradle:/root/.gradle
             - uploads_account:/app/uploads/avatars
         networks:
@@ -72,7 +72,7 @@ services:
             - SPRING_REDIS_HOST=${CATALOG_SPRING_REDIS_HOST}
             - SPRING_REDIS_PORT=${CATALOG_SPRING_REDIS_PORT}
         volumes:
-            - ./Service_Catalog/Service_Catalog_Backend:/app
+            # Only safe volumes - cache and uploads, NOT source code
             - service-catalog-gradle:/root/.gradle
             - uploads_products:/app/uploads/products
         networks:
@@ -96,7 +96,7 @@ services:
             - DB_USER=${CART_ORDER_DB_USER}
             - DB_PASSWORD=${CART_ORDER_DB_PASSWORD}
         volumes:
-            - ./Service_Cart_Order/Service_Cart_Order_Backend:/app
+            # Only node_modules cache, NOT source code
             - service-cart-order-node_modules:/app/node_modules
         networks:
             - jec-network
@@ -118,8 +118,10 @@ services:
             - SPRING_DATASOURCE_URL=${MANAGER_SPRING_DATASOURCE_URL}
             - SPRING_DATASOURCE_USERNAME=${MANAGER_SPRING_DATASOURCE_USERNAME}
             - SPRING_DATASOURCE_PASSWORD=${MANAGER_SPRING_DATASOURCE_PASSWORD}
+            - MANAGEMENT_METRICS_BINDERS_PROCESSOR_ENABLED=${MANAGER_MANAGEMENT_METRICS_BINDERS_PROCESSOR_ENABLED}
+            - MANAGEMENT_METRICS_BINDERS_UPTIME_ENABLED=${MANAGER_MANAGEMENT_METRICS_BINDERS_UPTIME_ENABLED}
         volumes:
-            - ./Service_Manager:/app
+            # Only Maven cache, NOT source code
             - service-manager-m2:/root/.m2
         networks:
             - jec-network
@@ -144,7 +146,7 @@ services:
             - CATALOG_SERVICE_HOST=${API_GATEWAY_CATALOG_SERVICE_HOST}
             - CART_ORDER_SERVICE_HOST=${API_GATEWAY_CART_ORDER_SERVICE_HOST}
         volumes:
-            - ./API_Gateway/api-gateway:/app
+            # Only safe volumes - cache and logs, NOT source code
             - api-gateway-node_modules:/app/node_modules
             - api-gateway-logs:/app/logs
         networks:
@@ -160,10 +162,9 @@ services:
         depends_on:
             - api-gateway
         environment:
-            - GEMINI_API_KEY=AIzaSyAxSK1D1M1mDrKm9a3_v6L29O4H1G59vf0
+            - GEMINI_API_KEY=${GEMINI_API_KEY}  # Use env var instead of hardcode
             - API_GATEWAY_URL=http://api-gateway:8000/api/v1
-        volumes:
-            - ./Service_Chatbot/Service_Chatbot_Python:/app
+        # No volumes for Python service to avoid permission issues
         networks:
             - jec-network
 

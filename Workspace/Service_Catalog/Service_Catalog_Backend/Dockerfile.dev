@@ -8,10 +8,9 @@ RUN apt-get update && \
 COPY build.gradle settings.gradle ./
 COPY gradle ./gradle
 COPY gradlew ./
-RUN chmod +x ./gradlew
-RUN ./gradlew dependencies --no-daemon
-
 COPY . .
+RUN chmod a+x ./gradlew
+RUN ./gradlew dependencies
 
 EXPOSE 8005
 

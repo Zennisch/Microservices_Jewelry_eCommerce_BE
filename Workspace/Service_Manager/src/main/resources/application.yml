@@ -11,6 +11,14 @@ management:
     web:
       exposure:
         exclude: '*'
+  metrics:
+    enable:
+      process:
+        cpu: false
+      system:
+        cpu:
+          usage: false
+
 logging:
   level:
     root: info
