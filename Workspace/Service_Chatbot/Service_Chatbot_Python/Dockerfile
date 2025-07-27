@@ -2,9 +2,10 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-COPY . .
+COPY setup.py ./
+RUN pip install --no-cache-dir .
 
-RUN pip install -e .
+COPY . .
 
 EXPOSE 5000
 

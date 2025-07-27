@@ -3,15 +3,17 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get install -y curl unzip
+    apt-get install -y curl unzip && \
+    rm -rf /var/lib/apt/lists/*
 
-COPY build.gradle settings.gradle ./
-COPY gradle ./gradle
-COPY gradlew ./
+COPY build.gradle settings.gradle gradlew ./
+COPY gradle gradle/
+RUN chmod +x gradlew
+
+RUN ./gradlew dependencies --no-daemon
+
 COPY . .
-RUN chmod a+x ./gradlew
-RUN ./gradlew dependencies
 
 EXPOSE 8005
 
-CMD ["./gradlew", "bootRun", "--stacktrace", "--info"]
+CMD ["./gradlew", "bootRun", "--no-daemon"]
