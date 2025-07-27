@@ -2,13 +2,14 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-# Install Maven
 RUN apt-get update && \
     apt-get install -y maven
 
-# Don't copy files - we'll use volumes for development
+COPY pom.xml ./
+RUN mvn dependency:go-offline
+
+COPY . .
+
 EXPOSE 8003
 
-# Use mvnw for spring-boot:run with dev profile
-RUN chmod +x ./mvnw
 CMD ["./mvnw", "spring-boot:run", "-Dspring-boot.run.profiles=dev"]

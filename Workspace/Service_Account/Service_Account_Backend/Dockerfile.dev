@@ -2,13 +2,17 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-# Install necessary tools
 RUN apt-get update && \
     apt-get install -y curl unzip
 
-# Don't copy files - we'll use volumes for development
+COPY build.gradle.kts settings.gradle.kts ./
+COPY gradle ./gradle
+COPY gradlew ./
+RUN chmod +x ./gradlew
+RUN ./gradlew dependencies --no-daemon
+
+COPY . .
+
 EXPOSE 8001
 
-# Use gradlew for continuous development
-RUN chmod +x ./gradlew
 CMD ["./gradlew", "bootRun", "--stacktrace", "--info"]
