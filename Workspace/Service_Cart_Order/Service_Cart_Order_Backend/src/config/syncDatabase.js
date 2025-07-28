@@ -8,7 +8,7 @@ const syncDatabase = async () => {
         // await sequelize.query(`UPDATE users SET updated_at = created_at WHERE updated_at IS NULL`);
         
         // Sau đó mới đồng bộ hóa schema
-        await sequelize.sync({ alter: true });
+        await sequelize.sync({ force: true });
         console.log('PostgreSQL database & tables synchronized successfully!');
         return true;
     } catch (error) {
