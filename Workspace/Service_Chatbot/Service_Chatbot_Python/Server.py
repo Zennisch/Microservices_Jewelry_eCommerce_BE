@@ -211,7 +211,7 @@ model = GenerativeModel(
 )
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=["*"])
 
 # Helper function to call the API Gateway
 def call_api(endpoint, method="GET", params=None, data=None):
