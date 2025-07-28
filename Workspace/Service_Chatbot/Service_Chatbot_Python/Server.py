@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 logger = logging.getLogger(__name__)
 
 # Configure Google Gemini API
-API_KEY = os.environ.get("GEMINI_API_KEY", "AIzaSyAxSK1D1M1mDrKm9a3_v6L29O4H1G59vf0")
+API_KEY = os.environ.get("GEMINI_API_KEY", "your_api_key_here")
 configure(api_key=API_KEY)
 
 # API Gateway base URL
@@ -205,7 +205,7 @@ tools = [
 
 # Initialize Gemini model
 model = GenerativeModel(
-    model_name="gemini-2.0-flash-001",
+    model_name="gemini-2.5-pro",
     tools=tools,
     system_instruction=system_instruction,
 )
