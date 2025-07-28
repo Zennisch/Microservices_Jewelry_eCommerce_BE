@@ -37,7 +37,13 @@ logger.info(`Using Cart/Order Service at: ${CART_ORDER_SERVICE_HOST}:8006`);
 logger.info(`Using Chatbot Service at: ${CHATBOT_SERVICE_HOST}:5000`);
 
 // Enable CORS
-app.use(cors());
+app.use(cors(
+    {
+        origin: '*',
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        allowedHeaders: 'Content-Type,Authorization',
+    }
+));
 
 // Middleware for request logging
 app.use(morgan('combined'));
