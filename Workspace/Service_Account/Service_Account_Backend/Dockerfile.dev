@@ -1,38 +1,17 @@
-# FROM openjdk:17-jdk-slim
-
-# WORKDIR /app
-
-# RUN apt-get update && \
-#     apt-get install -y curl unzip
-
-# COPY build.gradle.kts settings.gradle.kts ./
-# COPY gradle ./gradle
-# COPY gradlew ./
-# COPY . .
-# RUN chmod a+x ./gradlew
-# RUN ./gradlew dependencies
-
-# EXPOSE 8001
-
-# CMD ["./gradlew", "bootRun", "--stacktrace", "--info"]
 FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get install -y curl unzip && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y curl unzip
 
 COPY build.gradle.kts settings.gradle.kts ./
 COPY gradle ./gradle
 COPY gradlew ./
-
 COPY . .
-
-RUN chmod +x ./gradlew
-
-RUN ./gradlew dependencies --no-daemon
+RUN chmod a+x ./gradlew
+RUN ./gradlew dependencies
 
 EXPOSE 8001
 
-CMD ["./gradlew", "bootRun", "--no-daemon"]
+CMD ["./gradlew", "bootRun", "--stacktrace", "--info"]
