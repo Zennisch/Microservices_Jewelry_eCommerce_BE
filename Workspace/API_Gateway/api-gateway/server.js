@@ -163,16 +163,20 @@ app.use(
 app.use(
     '/api/v1/chatbot',
     createProxyMiddleware({
-        target: `http://${CHATBOT_SERVICE_HOST}:5000/api/v1`,
+        target: `http://${CHATBOT_SERVICE_HOST}:5000`,
         changeOrigin: true,
         pathRewrite: {
-            '^/api/v1/chatbot': '', // Remove the /api/v1/chatbot prefix when forwarding
+            '^/api/v1/chatbot': '/api/v1',
         },
         onProxyReq: (proxyReq, req, res) => {
-            logger.debug(`Proxying request to Service Chatbot: ${req.method} ${req.url}`);
+            logger.debug(`Proxying request to Service Chatbot: ${req.method} ${req.url} -> ${proxyReq.path}`);
         },
         onProxyRes: (proxyRes, req, res) => {
             logger.debug(`Received response from Service Chatbot: ${proxyRes.statusCode}`);
+        },
+        onError: (err, req, res) => {
+            logger.error(`Proxy error: ${err.message}`);
+            res.status(500).json({ error: 'Chatbot service unavailable' });
         },
     })
 );
