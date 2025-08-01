@@ -1,1 +1,0 @@
-# Microservices_Jewelry_eCommerce_BE
